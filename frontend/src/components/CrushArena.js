@@ -1,7 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Canvas } from '@react-three/fiber';
-import { OrbitControls, Text, Box } from '@react-three/drei';
 
 const CrushArena = ({ selectedObject, mode, onCrush }) => {
   const [crushState, setCrushState] = useState('idle'); // idle, crushing, crushed
