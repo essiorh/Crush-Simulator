@@ -74,55 +74,65 @@ const CrushArena = ({ selectedObject, mode, onCrush }) => {
     }
   };
 
-  // 3D Object component
+  // Simple 2D Object component (instead of 3D)
   const CrushableObject = ({ object, isBeingCrushed, crushForce }) => {
-    const meshRef = useRef();
-
-    useEffect(() => {
-      if (isBeingCrushed && meshRef.current) {
-        // Animate crushing effect
-        const originalScale = [1, 1, 1];
-        const crushScale = [1, 0.3, 1]; // Flatten the object
-        
-        // Simple animation (in real app, use proper animation library)
-        let progress = 0;
-        const animate = () => {
-          progress += 0.02;
-          if (progress <= 1 && meshRef.current) {
-            const scale = originalScale.map((s, i) => 
-              s + (crushScale[i] - s) * progress
-            );
-            meshRef.current.scale.set(...scale);
-            requestAnimationFrame(animate);
-          }
-        };
-        animate();
+    const getObjectEmoji = (type) => {
+      switch (type) {
+        case 'can': return '🥫';
+        case 'box': return '📦';
+        case 'electronics': return '📱';
+        case 'glass': return '🍾';
+        case 'plastic': return '🍼';
+        default: return '⚡';
       }
-    }, [isBeingCrushed, crushForce]);
+    };
 
     const getObjectColor = (type) => {
       switch (type) {
-        case 'can': return '#C0C0C0';
-        case 'box': return '#DEB887';
-        case 'electronics': return '#2F4F4F';
-        case 'glass': return '#E0FFFF';
-        case 'plastic': return '#FF6347';
-        default: return '#FFFFFF';
+        case 'can': return 'from-gray-300 to-gray-500';
+        case 'box': return 'from-yellow-600 to-yellow-800';
+        case 'electronics': return 'from-gray-700 to-gray-900';
+        case 'glass': return 'from-blue-200 to-blue-400';
+        case 'plastic': return 'from-red-400 to-red-600';
+        default: return 'from-white to-gray-300';
       }
     };
 
     return (
-      <Box
-        ref={meshRef}
-        args={[2, 2, 2]}
-        position={[0, 0, 0]}
+      <motion.div
+        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+        initial={{ scale: 1, rotate: 0 }}
+        animate={{
+          scale: isBeingCrushed ? [1, 1.2, 0.8, 1] : 1,
+          rotate: isBeingCrushed ? [0, 5, -5, 0] : 0,
+          y: isBeingCrushed ? [0, -10, 0] : 0
+        }}
+        transition={{ 
+          duration: isBeingCrushed ? object?.crush_time || 2 : 0.3,
+          ease: "easeInOut"
+        }}
       >
-        <meshStandardMaterial 
-          color={getObjectColor(object?.type)} 
-          transparent 
-          opacity={0.8}
-        />
-      </Box>
+        {/* Object representation */}
+        <div className={`w-32 h-32 rounded-xl bg-gradient-to-br ${getObjectColor(object?.type)} shadow-2xl flex items-center justify-center relative overflow-hidden`}>
+          {/* Object emoji/icon */}
+          <div className="text-6xl z-10 relative">
+            {getObjectEmoji(object?.type)}
+          </div>
+          
+          {/* Crush effect overlay */}
+          {isBeingCrushed && (
+            <motion.div
+              className="absolute inset-0 bg-white/30 backdrop-blur-sm"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: [0, 0.7, 0] }}
+              transition={{ duration: object?.crush_time || 2 }}
+            />
+          )}
+          
+          {/* Shimmer effect */}
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent transform -skew-x-12 -translate-x-full animate-[shimmer_3s_ease-in-out_infinite]" />
+        </div>
+      </motion.div>
     );
   };
 
