@@ -1,0 +1,59 @@
+{
+  "short_name": "Crush Simulator",
+  "name": "Crush Simulator - ASMR Игра",
+  "description": "Испытайте удовольствие от идеального разрушения различных объектов с реалистичными звуками и эффектами",
+  "icons": [
+    {
+      "src": "favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "logo192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "logo512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#667eea",
+  "background_color": "#0f0f23",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "ru",
+  "dir": "ltr",
+  "categories": ["games", "entertainment"],
+  "screenshots": [
+    {
+      "src": "screenshot1.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "platform": "wide"
+    },
+    {
+      "src": "screenshot2.png", 
+      "sizes": "750x1334",
+      "type": "image/png",
+      "platform": "narrow"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Начать игру",
+      "short_name": "Играть",
+      "description": "Быстрый запуск Crush Simulator",
+      "url": "/",
+      "icons": [
+        {
+          "src": "logo192.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ]
+}
