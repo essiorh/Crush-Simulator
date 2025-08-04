@@ -155,21 +155,13 @@ const CrushArena = ({ selectedObject, mode, onCrush }) => {
         className="w-full h-full cursor-pointer relative"
         onClick={handleArenaClick}
       >
-        {/* 3D Scene */}
-        <div className="absolute inset-0">
-          <Canvas camera={{ position: [0, 0, 10], fov: 50 }}>
-            <ambientLight intensity={0.6} />
-            <pointLight position={[10, 10, 10]} intensity={1} />
-            <pointLight position={[-10, -10, -10]} intensity={0.5} />
-            
-            <CrushableObject 
-              object={selectedObject}
-              isBeingCrushed={crushState === 'crushing'}
-              crushForce={crushForce}
-            />
-            
-            <OrbitControls enableZoom={false} enablePan={false} />
-          </Canvas>
+        {/* Simple 2D Scene (instead of 3D) */}
+        <div className="absolute inset-0 flex items-center justify-center">
+          <CrushableObject 
+            object={selectedObject}
+            isBeingCrushed={crushState === 'crushing'}
+            crushForce={crushForce}
+          />
         </div>
 
         {/* Ripple Effects */}
